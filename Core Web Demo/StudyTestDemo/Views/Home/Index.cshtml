@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Student>
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "学生列表页面";
+}
+
+<div class="card-deck">
+    @foreach (var student in Model)
+    {
+        var photoPath = "~/img/" + (string.IsNullOrWhiteSpace(student.PhotoPath) ? "五等分.jpg" : student.PhotoPath);
+        <div class="card m-4">
+            <div class="card-header">
+                <h3>@student.Name</h3>
+            </div>
+            @*<img class="card-img-top" src="~/img/五等分.jpg" />*@
+            <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" /><!--缓存破坏行为,生成唯一的散列值并附加到图片的url中,此唯一字符串会提示浏览器中服务器中重新加载图片,而不是从浏览器缓存重新加载,当服务器图片变化时,会重新生成新的图片url-->
+            <div class="card-footer text-center m-1">
+                <!--使用tag-Helper的好处,可以在路由发生变化时而不用去改动代码-->
+                <a asp-controller="Home" asp-action="Detail" asp-route-id="@student.Id" class="btn btn-primary">查看</a>
+                @*@Html.ActionLink("查看", "Detail", "Home", new {id = student.Id},new {@class= "btn btn_primary" })
+                    <a href="@Url.Action("Detail", "Home", new {id = student.Id})" class="btn btn-primary">查看</a>
+                    <a href="/Home/Detail/@student.Id" class="btn btn-primary">查看</a>*@
+                <a asp-controller="Home" asp-action="Edit" asp-route-id="@student.Id" class="btn btn-primary">编辑</a>
+                <a href="#" class="btn btn-danger">删除</a>
+            </div>
+        </div>
+    }
+</div>
+
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <title>@ViewData["Name"]</title>
+    </head>
+    <body>
+        @{
+            Student student = ViewData["Student"] as Student;
+        }
+        弱类型
+        <div>姓名:@student?.Name</div>
+        <div>邮箱:@student?.Email</div>
+        <div>年龄:@student?.Age</div>
+        <div>姓名:@ViewBag.Student.Name</div>
+        <div>邮箱:@ViewBag.Student.Email</div>
+        <div>年龄:@ViewBag.Student.Age</div>
+        强类型
+        <div>姓名:@Model.Name</div>
+        <div>邮箱:@Model.Email</div>
+        <div>年龄:@Model.Age</div>
+    </body>
+    </html>*@

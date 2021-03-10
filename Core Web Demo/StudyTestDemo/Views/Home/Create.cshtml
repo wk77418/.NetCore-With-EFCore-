@@ -1,0 +1,83 @@
+﻿@model StudentCreateViewModel
+@inject IStudentRepository StudentRepository
+@{
+    ViewBag.Title = "创建学生信息";
+}
+<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Create" class="mt-3">
+    <div asp-validation-summary="All" class="text-danger"></div><!--验证属性不通过时提示汇总-->
+
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control" placeholder="请输入姓名" />
+            <span asp-validation-for="Name" class="text-danger"></span><!--验证属性不通过时的提示-->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Age" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Age" class="form-control" placeholder="请输入年龄" />
+            <span asp-validation-for="Age" class="text-danger"></span><!--验证属性不通过时的提示-->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ClassName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="ClassName" asp-items="Html.GetEnumSelectList<ClassNameEnum>()" class="custom-select mr-sm-2">
+                <option value="">请选择</option>
+            </select>
+            <span asp-validation-for="ClassName" class="text-danger"></span><!--验证属性不通过时的提示-->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" placeholder="请输入邮箱" />
+            <span asp-validation-for="Email" class="text-danger"></span><!--验证属性不通过时的提示-->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <!--增加multiple可以支持多选-->
+                <input asp-for="Photo" multiple class="form-control custom-file-input"/>
+                <label class="custom-file-label">请选择照片</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">创建</button>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            学生总人数:@StudentRepository.GetList().Count().ToString()
+        </div>
+    </div>
+</form>
+
+
+@section MyScript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //单文件上传
+            $('.custom-file-input').on('change',
+                function () {
+                    var fileName = $(this).val().split('\\').pop();
+                    $(this).next('label').html(fileName);
+                }); 
+
+            ////多文件上传
+            //$('.custom-file-input').on('change',
+            //    function () {
+            //        var fileLabel = $(this).next('label');
+            //        var files = $(this)[0].files;
+            //        if (files.length>1) {
+            //            fileLabel.html("您已选择了" + files.length + "个文件");
+            //        } else {
+            //            fileLabel.html(files[0].name);
+            //        }
+            //    });
+        });
+    </script>
+}

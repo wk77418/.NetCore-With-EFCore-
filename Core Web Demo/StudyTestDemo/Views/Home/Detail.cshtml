@@ -1,0 +1,59 @@
+﻿@model StudentDetailViewModel
+
+@{
+    ViewBag.Title = Model.PageTitle;
+    Layout = "_Layout";
+    var photoPath = "~/img/" + (string.IsNullOrWhiteSpace(Model.Student.PhotoPath) ? "五等分.jpg" : Model.Student.PhotoPath);
+}
+<div class="card-deck">
+    <div class="card m-5">
+        <div class="card-header">
+            <h3>@Model.Student.Name</h3>
+        </div>
+        <div class="card-body text-center">
+            @*<img class="card-img-top" src="~/img/五等分.jpg" />*@
+            <img class="card-img-top" src="@photoPath" asp-append-version="true" /><!--缓存破坏行为,生成唯一的散列值并附加到图片的url中,此唯一字符串会提示浏览器中服务器中重新加载图片,而不是从浏览器缓存重新加载,当服务器图片变化时,会重新生成新的图片url-->
+            <h4>姓名:@Model.Student.Name</h4>
+            <h4>年龄:@Model.Student.Age</h4>
+            <h4>年级:@Model.Student.ClassName</h4>
+            <h4>邮箱:@Model.Student.Email</h4>
+        </div>
+        <div class="card-footer text-center m-5">
+            <a href="#" class="btn btn-primary">编辑</a>
+            <a href="#" class="btn btn-danger">删除</a>
+        </div>
+    </div>
+</div>
+
+
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>邮箱</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    foreach (Student student in Model)
+                    {
+                        <tr>
+                            <td>@student.Name</td>
+                            <td>@student.Age</td>
+                            <td>@student.Email</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </body>
+    </html>*@

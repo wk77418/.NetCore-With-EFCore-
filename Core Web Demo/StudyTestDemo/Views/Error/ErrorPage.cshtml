@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "页面不存在";
+}
+<div class="alert alert-danger mt-1 mb-1">
+    <h1>@ViewBag.ErrorMsg</h1>
+    <hr />
+    <h1>@ViewBag.OriginalPath</h1>
+    <hr />
+    <h1>@ViewBag.OriginalQueryString</h1>
+    <hr />
+    <h1>@ViewBag.OriginalPathBase</h1>
+    <hr />
+    <a asp-controller="Home" asp-action="Index">点击返回首页</a>
+</div>
